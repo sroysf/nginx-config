@@ -1,44 +1,24 @@
-# NGINX install and configuration on Ubuntu 10.10
+# Summary
 
-## Prerequisites:
+This project provides a very simple shell in order to instantly get up and running with NGINX
 
-    sudo aptitude install libpcre3-dev libpcre3 openssl zlib1g zlib1g-dev
+## Prequisites
 
-## Compile nginx
+- Docker 18.x+
 
-    ./configure --with-http_ssl_module
-    make
-    sudo make install
+## Run
 
-## While experimenting with nginx and changing configuration files, restart it with the command:
+```
+$ ./launch.sh
+```
 
-    sudo kill -HUP `cat /usr/local/nginx/logs/nginx.pid`
+## Configure
 
-## To install it as an auto-start service in Ubuntu
+Out of the box, this starts the server and points the web root at the content/ directory under this
+project for html content.
 
-1. git clone https://github.com/JasonGiedymin/nginx-init-ubuntu.git
-2. sudo cp nginx /etc/init.d
-3. sudo chmod +x /etc/init.d/nginx
-4. Edit the script to make sure that the DAEMON variable is pointing to the right place (/usr/local/nginx/sbin/nginx)
-5. sudo update-rc.d -f nginx defaults
+See default.conf and launch.sh for examples of how to also include additional external content directories, as
+is done here for /media.
 
-## SSL
-
-The SSL cert.* files are the same files generated using openssl for a self-signed certificate in Apache.
-
-There are many guides on the web to show you how to do this.
-
-## Basic Auth password file
-
-The passwords file is also generated using apache htpasswd utility. 
-
-This can be installed using the package apache2-utils in Ubuntu, or by installing apache2 itself. If you do install apache2, make sure to remove it from the startup scripts using:
-
-    sudo update-rc.d -f apache2 remove
-
-## Resources
-
-http://wiki.nginx.org/Nginx-init-ubuntu
-http://wiki.nginx.org/
-
-
+__NOTE:__ : This configuration also sets up wide open CORS headers. This is very useful for development, but be
+sure to lock all of this down properly if considering any of this for production!
